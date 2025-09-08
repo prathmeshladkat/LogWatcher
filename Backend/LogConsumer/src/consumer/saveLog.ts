@@ -1,4 +1,4 @@
-import { esClient } from "../../../utils/dist";
+import { esClient } from "../utils/index";
 
 export const saveLog = async (log: any) => {
   try {

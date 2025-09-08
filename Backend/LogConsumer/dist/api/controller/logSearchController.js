@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchLogs = void 0;
-const utils_1 = require("../../../../utils");
+const index_1 = require("../../utils/index");
 const searchLogs = async (req, res) => {
     try {
         const { serviceName, logLevel, message, startDate, endDate, from = 0, limit = 50, } = req.body;
@@ -77,7 +77,7 @@ const searchLogs = async (req, res) => {
             size: Math.min(1000, Math.max(1, limit)),
             track_total_hits: true,
         };
-        const response = await utils_1.esClient.search(searchQuery);
+        const response = await index_1.esClient.search(searchQuery);
         const results = {
             logs: response.hits.hits.map((hit) => ({
                 id: hit._id,

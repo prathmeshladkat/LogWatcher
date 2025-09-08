@@ -1,4 +1,4 @@
-import { produceLogs } from "../../../../utils/";
+import { produceLogs } from "../../utils/index";
 import { faker } from "@faker-js/faker";
 import type { Request, Response } from "express";
 

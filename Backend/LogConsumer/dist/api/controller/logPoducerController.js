@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStreamingStatus = exports.clearLogInterval = exports.stopSendingLogs = exports.startSendingLogs = void 0;
-const utils_1 = require("../../../../utils/");
+const index_1 = require("../../utils/index");
 const faker_1 = require("@faker-js/faker");
 // Use environment variable instead of import
 const isKafkaConnected = () => {
@@ -65,13 +65,13 @@ const startSendingLogs = async (req, res) => {
             try {
                 const logMessage = generateLog();
                 console.log("📋 Generated log message:", logMessage);
-                await (0, utils_1.produceLogs)("logs", logMessage);
+                await (0, index_1.produceLogs)("logs", logMessage);
                 console.log("✅ Log produced and sent to Kafka");
             }
             catch (error) {
                 console.error("❌ Error in log production cycle:", error);
             }
-        }, 2000); // Changed to 2 seconds to match your message
+        }, 20000); // Changed to 2 seconds to match your message
         res.json({ message: "Started producing logs every 2 seconds" });
         console.log("✅ Log production started successfully");
     }

@@ -17,7 +17,7 @@ import {
   deleteLogsIndexOnce,
   esClient,
   initKafkaProducer,
-} from "../../utils/dist";
+} from "./utils/index";
 import { initLogsConsumer } from "./consumer/logConsumer";
 
 export let isKafkaConnected = false;

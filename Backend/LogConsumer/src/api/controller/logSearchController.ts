@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import Joi from "joi";
-import { esClient } from "../../../../utils";
+import { esClient } from "../../utils/index";
 import { SearchRequest } from "@elastic/elasticsearch/lib/api/types";
 
 interface LogDocument {

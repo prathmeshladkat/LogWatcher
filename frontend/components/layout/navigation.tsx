@@ -3,7 +3,6 @@
 import { Activity, Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { SiteContainer } from "./site-container";
@@ -23,22 +22,6 @@ const navigation = [
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
-
-  const handleSearchNavigation = async () => {
-    setIsLoadingSearch(true);
-    try {
-      const response = await fetch("/api/logs/search");
-      if (response.ok) {
-        // Navigate to search page
-        window.location.href = "/search";
-      }
-    } catch (error) {
-      console.error("failed to load search data:", error);
-    } finally {
-      setIsLoadingSearch(false);
-    }
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -51,24 +34,10 @@ export default function Navigation() {
                 <span className="text-xl font-bold">Log Watcher</span>
               </Link>
 
-              {/*Desktop Naigation*/}
+              {/*Desktop Navigation*/}
               <nav className="hidden md:flex items-center gap-1">
                 {navigation.map((item) => {
                   const Icon = item.icon;
-                  if (item.name === "Search") {
-                    return (
-                      <Button
-                        key={item.name}
-                        variant={pathname === item.href ? "default" : "ghost"}
-                        className="flex items-center gap-2"
-                        onClick={handleSearchNavigation}
-                        disabled={isLoadingSearch}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {isLoadingSearch ? "Loading..." : item.name}
-                      </Button>
-                    );
-                  }
                   return (
                     <Link key={item.name} href={item.href}>
                       <Button
@@ -95,22 +64,6 @@ export default function Navigation() {
                   <nav className="flex flex-col gap-2 mt-6">
                     {navigation.map((item) => {
                       const Icon = item.icon;
-                      if (item.name === "Search") {
-                        return (
-                          <Button
-                            key={item.name}
-                            variant={
-                              pathname === item.href ? "default" : "ghost"
-                            }
-                            className="w-full justify-start gap-2"
-                            onClick={handleSearchNavigation}
-                            disabled={isLoadingSearch}
-                          >
-                            <Icon className="h-4 w-4" />
-                            {isLoadingSearch ? "Loading..." : item.name}
-                          </Button>
-                        );
-                      }
                       return (
                         <Link key={item.name} href={item.href}>
                           <Button

@@ -15,7 +15,7 @@ const http_1 = require("http");
 const socket_io_1 = require("socket.io");
 const logProducerRoutes_1 = __importDefault(require("./api/routes/logProducerRoutes"));
 const logSearchRoutes_1 = __importDefault(require("./api/routes/logSearchRoutes"));
-const dist_1 = require("../../utils/dist");
+const index_1 = require("./utils/index");
 const logConsumer_1 = require("./consumer/logConsumer");
 exports.isKafkaConnected = false;
 let logInterval = null;
@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
 const gracefulShutdown = async () => {
     console.log("🔄 Initiating graceful shutdown...");
     try {
-        await (0, dist_1.closeProducer)();
+        await (0, index_1.closeProducer)();
         console.log("✅ Kafka producer closed");
     }
     catch (error) {
@@ -73,13 +73,13 @@ process.on("SIGINT", gracefulShutdown);
 const start = async () => {
     try {
         console.log("🚀 starting log worker..");
-        await (0, dist_1.initKafkaProducer)();
+        await (0, index_1.initKafkaProducer)();
         setKafkaConnected(true);
         console.log("✅ Kafka connection established");
         //delete logs index because it has unmutable mapping so for caution purpose
         //await deleteLogsIndexOnce();
         //creates new logs index for storing document
-        await (0, dist_1.createLogsIndex)();
+        await (0, index_1.createLogsIndex)();
         await (0, logConsumer_1.initLogsConsumer)();
         server.listen(PORT, () => {
             console.log(`🌐 Unified server running on http://localhost:${PORT}`);
